@@ -130,6 +130,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     fclose($file);
 
+    include 'send_donation_email.php';
+
+    $donorData = [
+        'name' => $donor_name,
+        'email' => $donor_email,
+        'phone' => $donor_phone,
+        'amount' => $total_amount,
+        'seva' => $seva_summary_str,
+        '80g' => $want_80g === 'Yes' ? 'true' : 'false', // true/false
+    ];
+
+    sendDonationEmail($donorData);
+
     echo json_encode(['success' => true, 'message' => 'Donation saved successfully']);
     exit;
 }
