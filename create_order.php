@@ -1,8 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-$keyId = 'rzp_test_BtAysK1yRiClyy';
-$keySecret = 'HDZLa4jDy7Qopr1deWWB3OjD';
+$keyId = 'rzp_live_gEUiOyc32j0gf5';
+$keySecret = 'bTInoL9nyanBGz7vphPkOBUr';
 
 $data = json_decode(file_get_contents('php://input'), true);
 $amount = isset($data['amount']) ? intval($data['amount']) * 100 : 0;

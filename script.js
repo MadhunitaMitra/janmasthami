@@ -56,19 +56,46 @@ function initializeDonationCalculator() {
         any: 0  // Add any amount option
     };
 
-    // Listen for changes on seva select dropdowns
-    const sevaSelects = document.querySelectorAll('.seva-select');
-    sevaSelects.forEach(function(select) {
-        select.addEventListener('change', function() {
-            const seva = select.dataset.seva;
-            const amount = parseInt(select.value) || 0;
+    // Listen for clicks on seva buttons
+    const sevaButtons = document.querySelectorAll('.btn-donate-sm[data-seva]');
+    console.log('Found seva buttons:', sevaButtons.length); // Debug log
+    
+    if (sevaButtons.length === 0) {
+        console.error('No seva buttons found! Check HTML structure.');
+        return;
+    }
+    
+    sevaButtons.forEach(function(button, index) {
+        console.log(`Button ${index}:`, button.dataset.seva, button.dataset.amount); // Debug log
+        
+        // Add a simple click test first
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Button clicked:', button.dataset.seva, button.dataset.amount); // Debug log
+            
+            // Test if button click is working
+            alert(`Button clicked: ${button.dataset.seva} - ₹${button.dataset.amount}`);
+            
+            const seva = button.dataset.seva;
+            const amount = parseInt(button.dataset.amount) || 0;
+            
+            // Reset all buttons in the same seva category
+            const sameSevaButtons = document.querySelectorAll(`[data-seva="${seva}"]`);
+            sameSevaButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
             
             sevaAmounts[seva] = amount;
+            console.log('Updated sevaAmounts:', sevaAmounts); // Debug log
+            
             updateTotal();
             updateSelectedSevas();
             
             // Show modal if amount is selected
             if (amount > 0) {
+                console.log('Showing modal for amount:', amount); // Debug log
                 showDonorModal();
             }
         });
@@ -95,10 +122,66 @@ function initializeDonationCalculator() {
 
 // Show donor modal function
 function showDonorModal() {
+    console.log('showDonorModal called'); // Debug log
     const totalAmount = Object.values(sevaAmounts).reduce((sum, amount) => sum + amount, 0);
+    console.log('Total amount:', totalAmount); // Debug log
+    
     if (totalAmount > 0) {
-        const modal = new bootstrap.Modal(document.getElementById('donorModal'));
-        modal.show();
+        const modalElement = document.getElementById('donorModal');
+        console.log('Modal element:', modalElement); // Debug log
+        
+        if (modalElement) {
+            try {
+                // Try Bootstrap modal first
+                if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                    const modal = new bootstrap.Modal(modalElement);
+                    console.log('Bootstrap modal instance:', modal); // Debug log
+                    modal.show();
+                } else {
+                    // Fallback: show modal manually
+                    console.log('Bootstrap not available, showing modal manually');
+                    modalElement.style.display = 'block';
+                    modalElement.classList.add('show');
+                    modalElement.setAttribute('aria-hidden', 'false');
+                    
+                    // Add backdrop
+                    const backdrop = document.createElement('div');
+                    backdrop.className = 'modal-backdrop fade show';
+                    backdrop.id = 'manualBackdrop';
+                    document.body.appendChild(backdrop);
+                    
+                    // Close modal when clicking backdrop
+                    backdrop.addEventListener('click', function() {
+                        hideDonorModal();
+                    });
+                }
+            } catch (error) {
+                console.error('Error showing modal:', error);
+                // Fallback: show modal manually
+                modalElement.style.display = 'block';
+                modalElement.classList.add('show');
+            }
+        } else {
+            console.error('Modal element not found!'); // Debug log
+        }
+    } else {
+        console.log('Total amount is 0, not showing modal'); // Debug log
+    }
+}
+
+// Hide donor modal function
+function hideDonorModal() {
+    const modalElement = document.getElementById('donorModal');
+    if (modalElement) {
+        modalElement.style.display = 'none';
+        modalElement.classList.remove('show');
+        modalElement.setAttribute('aria-hidden', 'true');
+        
+        // Remove manual backdrop
+        const backdrop = document.getElementById('manualBackdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
     }
 }
 
@@ -206,9 +289,9 @@ function resetForm() {
     form.reset();
     document.getElementById('totalAmount').textContent = '₹0';
     
-    // Reset all seva select dropdowns
-    document.querySelectorAll('.seva-select').forEach(select => {
-        select.value = '';
+    // Reset all seva buttons
+    document.querySelectorAll('.btn-donate-sm[data-seva]').forEach(button => {
+        button.classList.remove('active');
     });
     
     // Clear any amount input
@@ -277,7 +360,7 @@ function showAlert(message, type) {
 
 // Razorpay configuration and payment logic
 const razorpayOptions = {
-    key: "rzp_test_BtAysK1yRiClyy", // Replace with your actual Razorpay key
+    key: "rzp_live_gEUiOyc32j0gf5", // Replace with your actual Razorpay key
     amount: 0, // Will be set dynamically
     currency: "INR",
     name: "ISKCON New Town",
