@@ -39,7 +39,6 @@ h1, h2, h3, h4, h5, h6 {
 .devotional-header {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: var(--white);
-    padding: 1rem 2rem;
 }
 .devotional-header .navbar {
     padding: 1rem 0;
@@ -76,94 +75,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(92, 1, 34, 0.3);
-}
-
-/* Hero Section */
-.hero-section {
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-banner {
-    position: relative;
-    height: 70vh;
-    min-height: 500px;
-}
-
-.hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(92, 1, 34, 0.4) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hero-logo {
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-}
-
-.hero-title {
-    font-size: 4rem;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--gold);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.hero-description {
-    font-size: 1.2rem;
-    color: var(--cream);
-    margin-bottom: 2rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.event-details {
-    margin: 2rem 0;
-}
-
-.event-info {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.event-date, .event-location {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    font-weight: 600;
-    color: var(--primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border: 2px solid var(--gold);
-}
-
-.hero-text {
-    max-width: 800px;
-    margin: 2rem auto 0;
-    font-size: 1.1rem;
-    color: var(--cream);
-    line-height: 1.7;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Schedule Section */
