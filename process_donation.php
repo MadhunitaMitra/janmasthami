@@ -10,7 +10,7 @@ ini_set('display_errors', 0);
 $filename = 'donations.csv';
 
 // Razorpay secret key (use the same as in create_order.php)
-$keySecret = 'rzp_test_BtAysK1yRiClyy';
+$keySecret = 'HDZLa4jDy7Qopr1deWWB3OjD';
 
 // Ensure it's a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
