@@ -287,7 +287,7 @@ function showAlert(message, type) {
 }
 
 const razorpayOptions = {
-    key: "rzp_live_gEUiOyc32j0gf5",
+    key: "rzp_test_BtAysK1yRiClyy",
     amount: 0,
     currency: "INR",
     name: "ISKCON New Town",
